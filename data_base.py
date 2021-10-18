@@ -1,11 +1,23 @@
 import csv
+import random
+import string
 
 class DataBase:
     def __init__(self):
         self.n_keys = 20000
 
+    def generate_random_string(self):
+        length = random.randint(1, 20)
+        letters = string.ascii_lowercase
+        rand_string = ''.join(random.choice(letters) for i in range(length))
+        return rand_string
+
     def generate(self, num=10000):
-        pass
+        for i in range(num):
+            print(i)
+            key = random.randint(1, 20000)
+            data = self.generate_random_string()
+            self.add(key, data)
 
     def add(self, key, data):
         if self.find(key) != None:
@@ -20,19 +32,49 @@ class DataBase:
                 for row in file_reader:
                     main_data.append(row)
         except IOError:
+            pass
+
+        if main_data != []:
+            for i in range(len(main_data)):
+                if i < len(main_data) - 1 and i > 0:
+                    if key > int(main_data[i][0]) and key < int(main_data[i+1][0]):
+                        main_data.insert(i+1, [str(key), data])
+                        break
+                elif i == len(main_data) - 1:
+                    if key > int(main_data[i][0]):
+                        main_data.append([key, data])
+                elif i == 0:
+                    if key < int(main_data[i][0]):
+                        main_data.insert(i, [key, data])
+        else:
+            main_data.append([key, data])
+
+        try:
+            with open('main_area/' + area + '.csv', mode="w", encoding='utf-8') as w_file:
+                file_writer = csv.writer(w_file, delimiter=",", lineterminator="\r")
+                for row in main_data:
+                    file_writer.writerow(row)
+        except IOError:
             return -1
 
+    def remove(self, key):
+        if self.find(key) == None:
+            return -1
+
+        area = self.getArea(key)
+
+        main_data = []
+        try:
+            with open('main_area/' + area + '.csv', encoding='utf-8') as index_area:
+                file_reader = csv.reader(index_area, delimiter=",")
+                for row in file_reader:
+                    main_data.append(row)
+        except IOError:
+            pass
+
         for i in range(len(main_data)):
-            if i < len(main_data) - 1 and i > 0:
-                if key > int(main_data[i][0]) and key < int(main_data[i+1][0]):
-                    main_data.insert(i+1, [str(key), data])
-                    break
-            elif i == len(main_data) - 1:
-                if key > int(main_data[i][0]):
-                    main_data.append([key, data])
-            elif i == 0:
-                if key < int(main_data[i][0]):
-                    main_data.insert(i, [key, data])
+            if key == int(main_data[i][0]):
+                del main_data[i]
 
         try:
             with open('main_area/' + area + '.csv', mode="w", encoding='utf-8') as w_file:
