@@ -93,7 +93,6 @@ class DataBase:
         return self.num_to_len_5(key) + ',' + self.str_to_len_n(data, 13)
 
     def add_line(self, linses, line):
-        print(len(linses))
         for i in range(len(linses)):
             if int(linses[i][:5]) == int(line[:5]):
                 linses[i] = line
@@ -111,7 +110,6 @@ class DataBase:
                 if int(line[:5]) < int(linses[i][:5]) or int(linses[i][:5]) == 0:
                     linses.insert(i, line)
                     break
-        print(len(linses))
         return linses[:-1]
 
     def find_in_area(self, array, K):
@@ -169,13 +167,6 @@ class DataBase:
                     delta = 0
         else:
             return array[i - 1]
-
-        # for line in area:
-        #     if int(line[:5]) == 0:
-        #         return None
-        #
-        #     if int(line[:5]) == key:
-        #         return line
 
     def write_area(self, key, area):
         address = self.get_address(key)

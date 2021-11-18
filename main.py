@@ -2,16 +2,14 @@ from data_base import DataBase
 
 db = DataBase()
 
-# db.create_main_area()
-# db.generate()
+print(db.find(17301))
+print(db.find(17302))
+print(db.find(17310))
+print(db.find(17313))
+print(db.add(17332, 'tttttttt'))
 
-# for i in range(17000, 18000):
-#     print(i)
-#     db.add(i, db.generate_random_string())
-#db.add(25, db.generate_random_string())
-#db.remove(17)
-
-#print(db.remove(38))
-#print(db.add(2300, 'nknjkj'))
-print(db.find(2))
-print(db.get_number_of_comparisons())
+# keys = [2582, 17960, 434, 17487, 17473, 4563, 23, 8677, 1564, 1900, 2321, 2323, 646, 867, 13333]
+#
+# for k in keys:
+#     print(db.find(k))
+#     print(db.get_number_of_comparisons())
