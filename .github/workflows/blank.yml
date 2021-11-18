@@ -19,4 +19,4 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        py -m pylint main.py
+        python -m pylint main.py
